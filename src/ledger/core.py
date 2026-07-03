@@ -1,6 +1,7 @@
+#type-aware balances: work in progress
+
 class InvalidEntryError(Exception):
     pass
-
 
 class Account:
     def __init__(self, name, acct_type, balance = 0):
