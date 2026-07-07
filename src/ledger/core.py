@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 # Ledger Core - double-entry engine
-=======
-#type-aware balances: work in progress
->>>>>>> 95ffed6f90c35bbb9f1200df5fd05ba3539e694e
+#type-aware balances: work in progress\
+
+# BAD LINE - remove me
 
 class InvalidEntryError(Exception):
     pass
