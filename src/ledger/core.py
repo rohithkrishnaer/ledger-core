@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 # Ledger Core - double-entry engine
-=======
+
 #type-aware balances: work in progress
->>>>>>> 95ffed6f90c35bbb9f1200df5fd05ba3539e694e
+
 
 class InvalidEntryError(Exception):
     pass
@@ -12,6 +12,9 @@ class Account:
         self.name = name
         self.acc_type = acct_type
         self.balance = balance
+    
+    def __repr__ (self):
+        return f"Account({self.name!r}, balance={self.balance})"
 
 class JournalEntry:
     def __init__(self, debit, credit, amount):
