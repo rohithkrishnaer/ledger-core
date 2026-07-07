@@ -1,42 +1,46 @@
 # Ledger Core
 
-A double-entry bookkeeping engine in pure Python, with a pytest test suite.
+A double-entry accounting engine in Python — the bookkeeping model real accounting systems are built on.
 
-Every transaction is recorded in two accounts — one debited, one credited, by equal
-amounts — so the books always balance. The engine enforces that invariant and rejects
-invalid entries.
+## Why double-entry?
+Every transaction moves an equal amount between two accounts: one debited, one credited.
+Because debits and credits always match, the **trial balance always sums to zero** — and if it
+ever doesn't, you know something is wrong. That built-in check is what makes double-entry
+trustworthy, and it's the core guarantee this engine enforces.
 
-## Concepts
-- **Account** — a name, a type (asset/liability/equity/income/expense), and a balance.
-- **JournalEntry** — one transaction: a debit account, a credit account, an amount.
-- **Ledger** — holds accounts and entries; posts transactions and produces a trial balance.
+## Features
+- **Double-entry posting** — each journal entry debits one account and credits another by the same amount.
+- **Trial balance** — sums every account balance; returns 0 for a valid set of books.
+- **Input validation** — rejects non-positive amounts up front with a custom `InvalidEntryError`, so bad data never enters the ledger.
+- **Readable objects** — accounts print clearly, e.g. `Account('Cash', balance=0)`.
+- **Tested** — 10 passing `pytest` tests covering posting, balancing, and validation.
 
-## The double-entry rule
-On every post, the debit account increases and the credit account decreases by the same
-amount — so the **trial balance (sum of all balances) is always 0**. Non-positive amounts
-are rejected with a custom `InvalidEntryError`.
+## Install
+```bash
+git clone https://github.com/rohithkrishnaer/ledger-core.git
+cd ledger-core
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+pip install -e .
+```
 
 ## Usage
 ```python
-ledger = Ledger()
+from ledger import Account, JournalEntry, Ledger
+
 cash = Account("Cash", "asset")
-rent = Account("Rent Expense", "expense")
+sales = Account("Sales", "income")
+
+ledger = Ledger()
 ledger.add_account(cash)
-ledger.add_account(rent)
+ledger.add_account(sales)
 
-ledger.post(JournalEntry(rent, cash, 100))   # pay £100 rent
-
-print(rent.balance)            # 100
-print(cash.balance)            # -100
-print(ledger.trial_balance())  # 0  ✓ balanced
+ledger.post(JournalEntry(cash, sales, 100))   # debit Cash, credit Sales
+print(cash)                 # Account('Cash', balance=100)
+print(ledger.trial_balance())   # 0
 ```
 
 ## Tests
 ```bash
-pip install pytest
-pytest
+python -m pytest
 ```
-10 tests cover posting, balance direction, the trial-balance invariant, validation, and accumulation.
-
-## Built with
-Pure Python + pytest. No external dependencies.
