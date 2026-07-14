@@ -4,16 +4,16 @@ A double-entry accounting engine in Python — the bookkeeping model real accoun
 
 ## Why double-entry?
 Every transaction moves an equal amount between two accounts: one debited, one credited.
-Because debits and credits always match, the **trial balance always sums to zero** — and if it
+Because debits and credits always match, the **trial balance always sums to zero** - and if it
 ever doesn't, you know something is wrong. That built-in check is what makes double-entry
 trustworthy, and it's the core guarantee this engine enforces.
 
 ## Features
-- **Double-entry posting** — each journal entry debits one account and credits another by the same amount.
-- **Trial balance** — sums every account balance; returns 0 for a valid set of books.
-- **Input validation** — rejects non-positive amounts up front with a custom `InvalidEntryError`, so bad data never enters the ledger.
-- **Readable objects** — accounts print clearly, e.g. `Account('Cash', balance=0)`.
-- **Tested** — 10 passing `pytest` tests covering posting, balancing, and validation.
+- **Double-entry posting** - each journal entry debits one account and credits another by the same amount.
+- **Trial balance** - sums every account balance; returns 0 for a valid set of books.
+- **Input validation** - rejects non-positive amounts up front with a custom `InvalidEntryError`, so bad data never enters the ledger.
+- **Readable objects** - accounts print clearly, e.g. `Account('Cash', balance=0)`.
+- **Tested** - 10 passing `pytest` tests covering posting, balancing, and validation.
 
 ## Install
 ```bash
